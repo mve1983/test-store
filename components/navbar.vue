@@ -4,6 +4,9 @@ const nav = ref<HTMLElement | null>(null);
 const burgerMenuOpen = ref(false);
 let resizeObserver: ResizeObserver;
 
+const cartStore = useCartStore();
+const route = useRoute();
+
 function toggleBurgerMenu() {
   burgerMenuOpen.value = !burgerMenuOpen.value;
 }
@@ -15,40 +18,80 @@ onMounted(() => {
   });
 
   resizeObserver.observe(nav.value);
+
+  console.log(cartStore.totalItemsInCart);
+  console.log(route.path);
 });
 
 onBeforeUnmount(() => resizeObserver.disconnect());
 </script>
 
 <template>
-  <h2>Test Store</h2>
   <nav ref="nav">
     <div v-if="windowWidth > 720">
       <ul>
         <li>
-          <NuxtLink class="nav-link" to="/">Home</NuxtLink>
+          <NuxtLink
+            class="nav-link"
+            :class="route.path === '/' ? 'active' : null"
+            to="/"
+            >Home</NuxtLink
+          >
         </li>
         <li>
-          <NuxtLink class="nav-link" to="/products">Products</NuxtLink>
+          <NuxtLink
+            class="nav-link"
+            :class="route.path === '/products' ? 'active' : null"
+            to="/products"
+            >Products</NuxtLink
+          >
         </li>
         <li>
-          <NuxtLink class="nav-link" to="/cart">Cart</NuxtLink>
+          <NuxtLink
+            class="nav-link"
+            :class="route.path === '/cart' ? 'active' : null"
+            to="/cart"
+            >Cart<span>{{ cartStore.totalItemsInCart }}</span></NuxtLink
+          >
         </li>
       </ul>
     </div>
     <div v-else>
       <button type="button" @click="toggleBurgerMenu">
-        <img src="/svg/menu.svg" alt="burger menu button" width="30" height="auto" />
+        <img
+          src="/svg/menu.svg"
+          alt="burger menu button"
+          width="30"
+          height="auto"
+        />
       </button>
       <ul v-if="burgerMenuOpen" class="burger-menu-ul">
         <li>
-          <NuxtLink class="nav-link" to="/" @click="toggleBurgerMenu">Home</NuxtLink>
+          <NuxtLink
+            class="nav-link"
+            :class="route.path === '/' ? 'active' : null"
+            to="/"
+            @click="toggleBurgerMenu"
+            >Home</NuxtLink
+          >
         </li>
         <li>
-          <NuxtLink class="nav-link" to="/products" @click="toggleBurgerMenu">Products</NuxtLink>
+          <NuxtLink
+            class="nav-link"
+            :class="route.path === '/products' ? 'active' : null"
+            to="/products"
+            @click="toggleBurgerMenu"
+            >Products</NuxtLink
+          >
         </li>
         <li>
-          <NuxtLink class="nav-link" to="/cart" @click="toggleBurgerMenu">Cart</NuxtLink>
+          <NuxtLink
+            class="nav-link"
+            :class="route.path === '/cart' ? 'active' : null"
+            to="/cart"
+            @click="toggleBurgerMenu"
+            >Cart<span>{{ cartStore.totalItemsInCart }}</span></NuxtLink
+          >
         </li>
       </ul>
     </div>
@@ -57,13 +100,6 @@ onBeforeUnmount(() => resizeObserver.disconnect());
 
 <style scoped>
 button {
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
   position: absolute;
   top: 0.5rem;
   right: 2rem;
@@ -89,6 +125,13 @@ ul {
   gap: 1rem;
 }
 
+span {
+  width: 1rem;
+  height: 1rem;
+
+  border-radius: 9999px;
+}
+
 .burger-menu-ul {
   position: absolute;
   top: 3rem;
@@ -111,6 +154,12 @@ ul {
 
 .nav-link:hover,
 .nav-link:active {
+  background-color: var(--main-text-color);
+  color: var(--main-bg-color);
+  text-shadow: 1px 1px var(--main-text-color);
+}
+
+.active {
   background-color: var(--main-text-color);
   color: var(--main-bg-color);
   text-shadow: 1px 1px var(--main-text-color);
