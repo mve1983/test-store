@@ -1,4 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const cartStore = useCartStore();
+onMounted(() => {
+  cartStore.checkLocaleStorage();
+});
+</script>
 
 <template>
   <header>

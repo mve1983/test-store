@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  // devtools: { enabled: true },
 
   app: {
     head: {
@@ -8,9 +8,7 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       ],
       script: [],
-      link: [
-    
-      ],
+      link: [],
       style: [],
       noscript: [],
     },
@@ -18,5 +16,5 @@ export default defineNuxtConfig({
 
   css: ['@/assets/css/global.css'],
 
-})
-
+  modules: ['@pinia/nuxt'],
+});
