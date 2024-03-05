@@ -1,0 +1,55 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --main-bg-color: #002478;
+  --main-text-color: #ebe4d4;
+
+  --text-smallest: 0.6rem;
+  --text-smaller: 0.8rem;
+  --text-normal: 1rem;
+  --text-bigger: 1.2rem;
+  --text-biggest: 1.5rem;
+}
+
+a {
+  color: var(--main-text-color);
+  text-decoration: none;
+}
+
+html {
+  color: var(--main-text-color);
+  min-height: 100%;
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+body {
+  background: linear-gradient(to top right, #002478, #3cc1d4);
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+  min-height: 100%;
+  max-width: 1200px;
+  text-shadow: 1px 1px var(--main-bg-color);
+  
+}
+
+main {
+  animation: bluronstart 1s ease-in-out;
+}
+
+@keyframes bluronstart {
+  0% {
+    opacity: 0;
+    filter: blur(16px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
