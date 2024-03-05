@@ -1,10 +1,11 @@
 <script setup lang="ts">
 const props = defineProps<{
-  product: Product;
+  product: Product | CartProduct;
 }>();
 
 const cartStore = useCartStore();
 
+const route = useRoute();
 </script>
 
 <template>
@@ -18,11 +19,20 @@ const cartStore = useCartStore();
           Rating: {{ product.rating.rate }} / Ratings count:
           {{ product.rating.count }}
         </p>
-        <button type="button" @click="cartStore.addItemToCart(product)">Add to cart</button>
+        <button
+          v-if="route.path.includes('product')"
+          type="button"
+          @click="cartStore.addItemToCart(product)"
+        >
+          Add to cart
+        </button>
+        <div v-else class="amount-cart">
+          <label for="amount">How many items:</label>
+          <input type="number" name="amount" v-model="product.amount" />
+        </div>
       </div>
- <img :src="product.image" alt="product picture" class="product-picture" />
+      <img :src="product.image" alt="product picture" class="product-picture" />
     </div>
-    
   </div>
 </template>
 
@@ -40,6 +50,9 @@ button {
   max-width: 10rem;
 }
 
+.amount-cart {
+  max-width: 10rem;
+}
 .product-wrapper {
   display: flex;
   flex-direction: column;

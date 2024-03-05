@@ -1,5 +1,5 @@
 interface CartProduct extends Product {
-  count: number;
+  amount: number;
 }
 
 export const useCartStore = defineStore('cart', () => {
@@ -10,9 +10,9 @@ export const useCartStore = defineStore('cart', () => {
     const existingItem =
       items.value.filter((i: CartProduct) => i.id === product.id)[0] || null;
 
-    if (!existingItem) return items.value.push({ ...product, count: 1 });
+    if (!existingItem) return items.value.push({ ...product, amount: 1 });
 
-    existingItem.count = existingItem.count + 1;
+    existingItem.amount = existingItem.amount + 1;
     items.value = items.value.filter((i: CartProduct) => i.id !== product.id);
     items.value.push(existingItem);
   }
@@ -28,8 +28,8 @@ export const useCartStore = defineStore('cart', () => {
   watch(
     () => items,
     (_newValue, _oldValue) => {
-      const counts = items.value?.map((i: CartProduct) => i.count);
-      totalItemsInCart.value = counts.reduce((acc, curr) => acc + curr, 0);
+      const amounts = items.value?.map((i: CartProduct) => i.amount);
+      totalItemsInCart.value = amounts.reduce((acc, curr) => acc + curr, 0);
 
       items.value.length
         ? localStorage.setItem('test-cart', JSON.stringify(items.value))

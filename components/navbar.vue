@@ -18,9 +18,6 @@ onMounted(() => {
   });
 
   resizeObserver.observe(nav.value);
-
-  console.log(cartStore.totalItemsInCart);
-  console.log(route.path);
 });
 
 onBeforeUnmount(() => resizeObserver.disconnect());

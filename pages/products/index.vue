@@ -28,5 +28,4 @@ hr {
   border-radius: 0.5rem;
   box-shadow: 0.5rem 0.5rem 0.5rem var(--main-bg-color);
 }
-
 </style>
